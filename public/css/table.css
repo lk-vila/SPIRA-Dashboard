@@ -29,7 +29,7 @@ h1 {
   font-weight: 300;
   line-height:1em;
   text-align: center;
-  color: var(--primary);
+  color: var(--primary-dark);
 }
 
 h2 {
@@ -107,11 +107,11 @@ h2 a {
 }
 
 .container td:hover {
-  background-color: #FFF842;
-  color: #403E10;
+  background-color: var(--primary);
+  color: var(--gray);
   font-weight: bold;
   
-  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+  box-shadow: var(--primary-dark) -1px 1px, var(--primary-dark) -2px 2px, var(--primary-dark) -3px 3px, var(--primary-dark) -4px 4px, var(--primary-dark) -5px 5px, var(--primary-dark) -6px 6px;
   transform: translate3d(6px, -6px, 0);
   
   transition-delay: 0s;

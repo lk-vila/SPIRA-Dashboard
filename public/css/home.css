@@ -1,3 +1,12 @@
+
+:root{
+    --primary: #8B63FF;
+    --primary-dark: #4C2289;
+    --text: #52506C;
+    --danger: #FF006B;
+    --gray: #EEEFF5;
+}
+
 .container {
     padding: 80px 0;
     width: 960px;
@@ -16,9 +25,9 @@ h1 {
 .submit-button {
     border: none;
     padding: 24px 36px;
-    background: blueviolet;
+    background: var(--primary-dark);
     text-transform: uppercase;
-    color: white;
+    color: var(--gray);
     font-weight: bold;
     letter-spacing: 2px;
 }
