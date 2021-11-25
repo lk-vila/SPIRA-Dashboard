@@ -12,7 +12,26 @@ const getHome = (req: Request , res: Response, next: NextFunction) => {
 }
 
 const getTable = (req: Request , res: Response, next: NextFunction) => {
-    res.render('home/table')
+    res.render('home/table', {
+        listOfPacients: [
+            {
+                id: 1,
+                path: "algum path ai",
+                gender: "M",
+                age: 22,
+                outOfBreath: 5,
+                result: 0.98
+            },
+            {
+                id: 2,
+                path: "algum path ai",
+                gender: "F",
+                age: 25,
+                outOfBreath: 2,
+                result: 0.32
+            }
+        ]
+    })
 }
 
 const postPredict = async (req: Request , res: Response, next: NextFunction) => {
