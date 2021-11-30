@@ -1,34 +1,37 @@
-import * as mongodb from "mongodb"
+import * as mongodb from "mongodb";
 
 let db: mongodb.Db;
 
-const collections: any = {}
+const collections: any = {};
 
-const MONGODB_URI = "mongodb://root:12345@localhost:27017/"
+const MONGODB_URI = "mongodb://root:12345@localhost:27017/";
 
-const DBNAME = "test"
+const DBNAME = "test";
 
-const COLLECTION_NAME_INFERENCE = "inference"
-const COLLECTION_NAME_AUDIO = "audio"
+const COLLECTION_NAME_INFERENCE = "inference";
+const COLLECTION_NAME_AUDIO = "audio";
 
 const MongoClient = new mongodb.MongoClient(MONGODB_URI);
 
 const mongoConnect = async (callback: () => void) => {
-    try{
+    try {
         await MongoClient.connect();
-    
+
         db = MongoClient.db(DBNAME);
-        console.log('db created!')
-        const inferenceCollection: mongodb.Collection = db.collection(COLLECTION_NAME_INFERENCE);
-        const audioCollection: mongodb.Collection = db.collection(COLLECTION_NAME_AUDIO);
+        console.log("db created!");
+        const inferenceCollection: mongodb.Collection = db.collection(
+            COLLECTION_NAME_INFERENCE
+        );
+        const audioCollection: mongodb.Collection = db.collection(
+            COLLECTION_NAME_AUDIO
+        );
         collections.inference = inferenceCollection;
         collections.audio = audioCollection;
         callback();
-    } catch(e) {
+    } catch (e) {
         console.error(e);
     }
-}
-
+};
 
 // const mongoConnect = (callback: () => void) => {
 //     MongoClient.connect(MONGODB_URI)
@@ -45,10 +48,10 @@ const mongoConnect = async (callback: () => void) => {
 
 // const getDb = () => {
 //     if(db){
-//         return db;  
+//         return db;
 //     }
 //     throw 'No database found';
 // }
 
 export { mongoConnect, collections };
-// 
+//

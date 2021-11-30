@@ -1,10 +1,9 @@
-
-:root{
-    --primary: #8B63FF;
-    --primary-dark: #4C2289;
-    --text: #52506C;
-    --danger: #FF006B;
-    --gray: #EEEFF5;
+:root {
+    --primary: #8b63ff;
+    --primary-dark: #4c2289;
+    --text: #52506c;
+    --danger: #ff006b;
+    --gray: #eeeff5;
 }
 
 .container {
@@ -53,7 +52,7 @@ h1 {
     padding: 12px 0;
 }
 
-.gender-input input[type=radio] {
+.gender-input input[type="radio"] {
     background: var(--primary);
 }
 
