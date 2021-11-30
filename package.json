@@ -7,12 +7,13 @@
   "author": "lk-vila <lk-vila@protonmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node index.ts"
+    "dev": "nodemon --exec npx ts-node index.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/multer": "^1.4.7",
     "jest": "^27.3.1",
+    "nodemon": "^2.0.15",
     "prettier": "^2.4.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
@@ -22,7 +23,9 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "form-data": "^4.0.0",
+    "mongodb": "^4.2.0",
     "multer": "^1.4.3",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "shasum": "^1.0.2"
   }
 }

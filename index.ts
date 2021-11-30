@@ -1,7 +1,7 @@
-import axios from 'axios'
 import express from 'express'
 import homeRoutes from './routers/homeRouters'
 import path from 'path'
+import { mongoConnect } from './util/database'
 
 const app = express()
 const port = process.env.PORT || 80
@@ -13,4 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(homeRoutes)
 
-app.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`))
+mongoConnect( () => {
+    app.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`))
+})
+

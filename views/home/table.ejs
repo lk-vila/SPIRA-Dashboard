@@ -10,25 +10,26 @@
     <table class="container">
         <thead>
             <tr>
-                <th><h1 class="variableTitle">ID</h1></th>
-                <th><h1 class="variableTitle">Audio</h1></th>
+                <th><h1 class="variableTitle">Data</h1></th>
+                <th><h1 class="variableTitle">Nome </h1></th>
                 <th><h1 class="variableTitle">Sexo</h1></th>
                 <th><h1 class="variableTitle">Idade</h1></th>
                 <th><h1 class="variableTitle">Nível falta de ar</h1></th>
                 <th><h1 class="variableTitle">Resultado</h1></th>
-                <th><h1 class="variableTitle"></h1></th>
             </tr>
         </thead>
         <tbody>
-            <% for(let pacient of listOfPacients) { %>
-                <tr>
-                    <td> <%= pacient.id %></td>
-                    <td> <%= pacient.path %></td>
-                    <td> <%= pacient.gender %></td>
-                    <td> <%= pacient.age %></td>
-                    <td> <%= pacient.outOfBreath %></td>
-                    <td> <%= pacient.result %></td>
-                </tr>
+            <% if(inferenceList) { %>
+                <% for(let inference of inferenceList) { %>
+                    <tr>
+                        <td> <%= inference.timestamp %></td>
+                        <td> <%= inference.original_name %></td>
+                        <td> <%= inference.sex %></td>
+                        <td> <%= inference.age %></td>
+                        <td> <%= inference.level %></td>
+                        <td> <%= inference.result %></td>
+                    </tr>
+                <% } %>
             <% } %>
         </tbody>
     </table>

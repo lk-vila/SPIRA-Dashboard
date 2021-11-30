@@ -18,8 +18,51 @@ h1 {
     padding: 20px 0;
 }
 
+.header-section {
+    background: var(--gray);
+}
+
+.header-section > div {
+    display: flex;
+}
+
 .spira-title {
+    padding-right: 200px;
+    color: var(--text);
+}
+
+.spira-title span {
     font-size: 4em;
+}
+
+.spira-title p {
+    font-size: 1.5em;
+    line-height: 1.3em;
+}
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 36px 48px;
+    border-radius: 12px;
+    box-shadow: 10px 10px 12px 2px var(--gray);
+}
+
+.gender-input {
+    padding: 12px 0;
+}
+
+.gender-input input[type=radio] {
+    background: var(--primary);
+}
+
+.age-input {
+    padding: 12px 0;
+}
+
+.file-input {
+    padding: 12px 0;
 }
 
 .submit-button {
@@ -30,4 +73,8 @@ h1 {
     color: var(--gray);
     font-weight: bold;
     letter-spacing: 2px;
+}
+
+.submit-button:hover {
+    background: var(--primary);
 }

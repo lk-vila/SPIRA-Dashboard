@@ -1,24 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/home.css">
+        <script src="https://kit.fontawesome.com/419c6e93e6.js" crossorigin="anonymous"></script>
         <title>SPIRA Homepage</title>
     </head>
     <body>
-        <section>
+        <section class="header-section">
             <div class="container">
-                <h1>Estudo</br><span class="spira-title">SPIRA</span></h1>
-                <p>Doe sua voz e ajude no diagnóstico da Covid-19</p>
-            </div>
-            <div class="container">
-                <form>
-                    <input type="file" name="oi" id="audio_file">
-                    <input type="submit" value="Enviar" class="submit-button">
-                </form>
+                <div class="spira-title">
+                    <h1>Estudo</br><span>SPIRA</span></h1>
+                    <p>Doe sua voz e ajude no diagnóstico da Covid-19</p>
+                </div>
+                <div>
+                    <div class="user-form">
+                        <form method="post">
+                            <div class="gender-input">
+                                <label for="gender">Sexo</label>
+                                <i class="fas fa-mars"></i>
+                                <input type="radio" id="gender" value="M" name="M">Masculino</input>
+                                <input type="radio" id="gender" value="F" name="F">Feminino</input>
+                            </div>
+                            <div class="age-input">
+                                <label for="age">Idade</label>
+                                <i class="fas fa-venus"></i>
+                                <input type="text" id="age">
+                            </div>
+                            <div class="file-input">
+                                <input type="file" name="oi" id="audio_file">
+                            </div>
+                            <div>
+                                <input type="submit" value="Enviar" class="submit-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
     </body>
