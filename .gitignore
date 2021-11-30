@@ -2,5 +2,6 @@ files
 node_modules
 out
 tests
+*.csv
 *.log
 *.wav
