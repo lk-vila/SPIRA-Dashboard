@@ -18,20 +18,24 @@
                 </div>
                 <div>
                     <div class="user-form">
-                        <form method="post">
+                        <form method="POST" action="/predict" enctype="multipart/form-data">
                             <div class="gender-input">
                                 <label for="gender">Sexo</label>
                                 <i class="fas fa-mars"></i>
-                                <input type="radio" id="gender" value="M" name="M">Masculino</input>
-                                <input type="radio" id="gender" value="F" name="F">Feminino</input>
+                                <input name="sexo" required type="radio" id="gender" value="M">Masculino</input>
+                                <i class="fas fa-venus"></i>
+                                <input name="sexo" required type="radio" id="gender" value="F">Feminino</input>
                             </div>
                             <div class="age-input">
                                 <label for="age">Idade</label>
-                                <i class="fas fa-venus"></i>
-                                <input type="text" id="age">
+                                <input name="idade" required type="number" id="age" min="1" max="200">
+                            </div>
+                            <div class="shortness-breath">
+                                <label for="breath">Nível de falta de ar</label>
+                                <input name="nivel_falta_de_ar" required type="number" id="breath" min="0" max="10">
                             </div>
                             <div class="file-input">
-                                <input type="file" name="oi" id="audio_file">
+                                <input name="audio" required type="file" id="audio_file" accept=".wav">
                             </div>
                             <div>
                                 <input type="submit" value="Enviar" class="submit-button">

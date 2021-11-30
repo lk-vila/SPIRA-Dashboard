@@ -4,7 +4,10 @@ import path from 'path'
 import { mongoConnect } from './util/database'
 
 const app = express()
-const port = process.env.PORT || 80
+const port = process.env.PORT || 8000
+
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json()); 
 
 // Sets EJS as view engine
 app.set('view engine', 'ejs');

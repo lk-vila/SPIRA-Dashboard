@@ -18,7 +18,6 @@ const mongoConnect = async (callback: () => void) => {
         await MongoClient.connect();
     
         db = MongoClient.db(DBNAME);
-        console.log('db created!')
         const inferenceCollection: mongodb.Collection = db.collection(COLLECTION_NAME_INFERENCE);
         const audioCollection: mongodb.Collection = db.collection(COLLECTION_NAME_AUDIO);
         collections.inference = inferenceCollection;
@@ -28,7 +27,6 @@ const mongoConnect = async (callback: () => void) => {
         console.error(e);
     }
 }
-
 
 // const mongoConnect = (callback: () => void) => {
 //     MongoClient.connect(MONGODB_URI)

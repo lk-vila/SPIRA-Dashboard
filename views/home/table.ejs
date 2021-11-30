@@ -4,14 +4,26 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="/css/table.css">
         <title>SPIRA Table</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <h1 id="title"><span class="blue"></span>SPIRA Table<span class="blue"></pan></h1>
-    <h2>Criado em associação com o <a href="http://ccsl.ime.usp.br/wiki/LabXP" target="_blank">LABXP</a></h2>
+    <div class="flex-container custom-container">
+        <div></div>
+        <div>
+            <h1 id="title"><span class="blue"></span>SPIRA Table<span class="blue"></span></h1>
+            <h2>Criado em associação com o <a href="http://ccsl.ime.usp.br/wiki/LabXP" target="_blank">LABXP</a></h2>
+        </div>
+        <div class="button-test">
+            <div></div>
+            <form action="/dump" method="GET">
+                <button class="button" style="vertical-align:middle"><span>Baixar CSV </span></button>
+            </form>
+        </div>
+    </div>
     <table class="container">
         <thead>
             <tr>
                 <th><h1 class="variableTitle">Data</h1></th>
-                <th><h1 class="variableTitle">Nome </h1></th>
+                <th><h1 class="variableTitle">Nome do áudio</h1></th>
                 <th><h1 class="variableTitle">Sexo</h1></th>
                 <th><h1 class="variableTitle">Idade</h1></th>
                 <th><h1 class="variableTitle">Nível falta de ar</h1></th>
@@ -23,7 +35,7 @@
                 <% for(let inference of inferenceList) { %>
                     <tr>
                         <td> <%= inference.timestamp %></td>
-                        <td> <%= inference.original_name %></td>
+                        <td> <%= inference.audio_name %></td>
                         <td> <%= inference.sex %></td>
                         <td> <%= inference.age %></td>
                         <td> <%= inference.level %></td>

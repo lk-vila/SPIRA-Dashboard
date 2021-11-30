@@ -2,13 +2,10 @@ import { Request, Response, NextFunction } from 'express'
 import axios from 'axios'
 import FormData from 'form-data'
 import fs from 'fs'
+import { Parser } from 'json2csv'
 import { collections } from '../util/database'
-import { ObjectId } from 'mongodb'
-const shasum = require('shasum')
 
-const getDrakeBestWrapper = (req: Request , res: Response, next: NextFunction) => {
-    res.send('Drake best wrapper')
-}
+const shasum = require('shasum')
 
 const getHome = (req: Request , res: Response, next: NextFunction) => {
     res.render('home/homePage')
@@ -16,17 +13,35 @@ const getHome = (req: Request , res: Response, next: NextFunction) => {
 
 const getTable = async (req: Request , res: Response, next: NextFunction) => {
     const inferenceList = await collections.inference.find().toArray()
+    //console.log(inferenceList)
     res.render('home/table', {
-            inferenceList: [inferenceList]
+            inferenceList: inferenceList
         }
     );
 }
 
+const test = async (req: Request , res: Response, next: NextFunction) => { 
+    const data = await collections.inference.find().toArray()
+
+    res.send(data)
+}
+
+const getDataAsCSV = async (req: Request , res: Response, next: NextFunction) => {
+    const json2csvParser = new Parser({ header: true })
+    const data = await collections.inference.find({}).project({ _id : 0}).toArray()
+    const csvData = json2csvParser.parse(data)
+    const timestamp = Date.now()
+
+    fs.writeFileSync(`resources/csv/${timestamp}.csv`, csvData)
+    res.download(`resources/csv/${timestamp}.csv`, () => unlinkFile('csv', `${timestamp}.csv`))
+}
 
 const postPredict = async (req: Request , res: Response, next: NextFunction) => {
-    if (req.file) {
+    //console.log(req.body)
+    console.log(req.file)
+    if (req.file && req.body.sexo && req.body.idade && req.body.nivel_falta_de_ar) {
         try {
-            const timestamp = Date.now().toString()
+            const timestamp = (new Date()).toISOString()
             const formData = new FormData()
             
             const sex = req.body.sexo
@@ -45,10 +60,9 @@ const postPredict = async (req: Request , res: Response, next: NextFunction) => 
             const spiraApiResponse = await axios.post("https://spira-api-demo.herokuapp.com//predict", formData, {
                 headers: formData.getHeaders()
             })
-
             
-            var original_name = req.file.originalname
-            const audio_file = await fs.readFileSync(`resources/audio/${timestamp}.wav`)
+            let original_name = req.file.originalname
+            const audio_file = fs.readFileSync(`resources/audio/${timestamp}.wav`)
             const sha1sum = shasum(audio_file)
             const result = spiraApiResponse.data.resultado
 
@@ -72,12 +86,9 @@ const postPredict = async (req: Request , res: Response, next: NextFunction) => 
                 level: `${level}`,
                 result: `${result}`
             })
-
             
-            fs.unlink(`resources/audio/${timestamp}.wav`, (err) => {
-                if (err) throw err;
-                //console.log(`resources/audio/${timestamp}.wav was deleted`);
-            });
+            
+            unlinkFile('audio', `${timestamp}.wav`)
 
             return res.status(200).json({'resultado': result})
         } catch (err) {
@@ -85,7 +96,14 @@ const postPredict = async (req: Request , res: Response, next: NextFunction) => 
         }
     }
 
-    return res.status(400).json('No audio file sent')
+    return res.status(400).json('The request is incomplete')
 }
 
-export { getDrakeBestWrapper, getHome, getTable, postPredict }
+const unlinkFile = (dir: String, fileName: String) => {
+    fs.unlink(`resources/${dir}/${fileName}`, (err) => {
+        if (err) throw err;
+        //console.log(`resources/audio/${timestamp}.wav was deleted`);
+    });
+}
+
+export { getHome, getTable, getDataAsCSV, postPredict, test }

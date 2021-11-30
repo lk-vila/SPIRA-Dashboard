@@ -59,6 +59,21 @@ h2 a {
   color: #185875;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-container div{
+  flex: 1 0 0;
+}
+
+.button-test {
+  display: flex;
+  align-items: flex-end;
+}
+
 .container td {
     font-weight: normal;
     font-size: 1em;
@@ -67,11 +82,16 @@ h2 a {
           box-shadow: 0 2px 2px -2px #0E1119;
 }
 
+.custom-container {
+  margin: 0 auto;
+  width: 80%;
+}
+
 .container {
-    text-align: left;
-    overflow: hidden;
-    width: 80%;
-    margin: 0 auto;
+  text-align: left;
+  overflow: hidden;
+  width: 80%;
+  margin: 0 auto;
   display: table;
   padding: 0 0 8em 0;
 }
@@ -79,7 +99,6 @@ h2 a {
 .container td, .container th {
     padding-bottom: 1%;
     padding-top: 1%;
-    padding-left: 1%;
     text-align: center;
 }
 
@@ -97,7 +116,7 @@ h2 a {
     background-color: var(--gray);
 }
 
-.container td:first-child { color: #FB667A; }
+.container td:first-child { color: #c671ff; }
 
 .container tr:hover {
   background-color: #464A52;
@@ -118,6 +137,50 @@ h2 a {
     transition-duration: 0.4s;
     transition-property: all;
   transition-timing-function: line;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: var(--primary-dark);
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  font-family: FontAwesome;
+  content: '\f0ab';
+  position: absolute;
+  opacity: 0;
+  top: 1px;
+  right: -20px;
+  transition: 0.4s;
+}
+
+.button:hover {
+  background-color: var(--primary)
+}
+
+.button:hover span {
+  padding-right: 30px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 
 #title {

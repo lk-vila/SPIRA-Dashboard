@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 
 :root{
     --primary: #8B63FF;
@@ -5,6 +8,15 @@
     --text: #52506C;
     --danger: #FF006B;
     --gray: #EEEFF5;
+}
+/* 
+input[type='number'] {
+    -moz-appearance:textfield;
+} */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .container {
@@ -49,12 +61,19 @@ h1 {
     box-shadow: 10px 10px 12px 2px var(--gray);
 }
 
+input {
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid var(--primary);
+}
+
 .gender-input {
     padding: 12px 0;
 }
 
-.gender-input input[type=radio] {
+input[type=radio] {
     background: var(--primary);
+    color: red;
 }
 
 .age-input {
@@ -67,12 +86,13 @@ h1 {
 
 .submit-button {
     border: none;
-    padding: 24px 36px;
+    padding: 18px 24px;
     background: var(--primary-dark);
     text-transform: uppercase;
     color: var(--gray);
     font-weight: bold;
     letter-spacing: 2px;
+    width: 100%;
 }
 
 .submit-button:hover {
