@@ -1,6 +1,5 @@
 files
 node_modules
 out
-tests
 *.log
-*.wav
+# *.wav
