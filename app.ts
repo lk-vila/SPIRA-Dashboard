@@ -13,8 +13,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRoutes);
 
-// mongoConnect(() => {
-//     app.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`))
-// })
+mongoConnect(() => {
+    app.listen(port, () =>
+        console.log(
+            `⚡️ [server]: Server is running at https://localhost:${port}`
+        )
+    );
+});
 
 export { app };

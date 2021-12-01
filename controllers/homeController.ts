@@ -3,21 +3,24 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "fs";
 import { collections } from "../util/database";
-import { ObjectId } from "mongodb";
 const shasum = require("shasum");
 
-const getHome = (req: Request, res: Response, next: NextFunction) => {
+const getHome = (_req: Request, res: Response, _next: NextFunction) => {
     res.render("home/homePage");
 };
 
-const getTable = async (req: Request, res: Response, next: NextFunction) => {
+const getTable = async (_req: Request, res: Response, _next: NextFunction) => {
     const inferenceList = await collections.inference.find().toArray();
     res.render("home/table", {
         inferenceList: [inferenceList],
     });
 };
 
-const postPredict = async (req: Request, res: Response, next: NextFunction) => {
+const postPredict = async (
+    req: Request,
+    res: Response,
+    _next: NextFunction
+) => {
     if (req.file) {
         try {
             const timestamp = Date.now().toString();
@@ -28,7 +31,6 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
             const level = req.body.nivel_falta_de_ar;
 
             fs.writeFileSync(`/tmp/${timestamp}.wav`, req.file.buffer);
-
             const stream = fs.createReadStream(`/tmp/${timestamp}.wav`);
 
             formData.append("audio", stream);
@@ -44,21 +46,22 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
                 }
             );
 
-            let original_name = req.file.originalname;
-            const audio_file = await fs.readFileSync(`/tmp/${timestamp}.wav`);
+            const audio_file = fs.readFileSync(`/tmp/${timestamp}.wav`);
             const sha1sum = shasum(audio_file);
             const result = spiraApiResponse.data.resultado;
 
             const existing_audio = await collections.audio.findOne({
                 hash: `${sha1sum}`,
             });
+            const original_name = existing_audio
+                ? existing_audio.original_name
+                : req.file.originalname;
+
             if (!existing_audio) {
                 collections.audio.insertOne({
                     hash: `${sha1sum}`,
                     original_name: `${original_name}`,
                 });
-            } else {
-                original_name = existing_audio.original_name;
             }
 
             collections.inference.insertOne({
@@ -72,17 +75,15 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
 
             fs.unlink(`/tmp/${timestamp}.wav`, (err) => {
                 if (err) throw err;
-                //console.log(`/tmp/${timestamp}.wav was deleted`);
             });
 
             return res.status(200).json({ resultado: result });
-        } catch (err) {
-            console.log(err);
-            return res.status(400).json("error : " + err);
+        } catch (err: any) {
+            return res.status(400).json({ error: String(err) });
         }
     }
 
-    return res.status(400).json("No audio file sent");
+    return res.status(400).json({ error: "No audio file sent" });
 };
 
 export { getHome, getTable, postPredict };
