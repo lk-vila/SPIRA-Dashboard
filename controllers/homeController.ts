@@ -12,7 +12,7 @@ const getHome = (_req: Request, res: Response, _next: NextFunction) => {
 const getTable = async (_req: Request, res: Response, _next: NextFunction) => {
     const inferenceList = await collections.inference.find().toArray();
     res.render("home/table", {
-        inferenceList: [inferenceList],
+        inferenceList: inferenceList,
     });
 };
 

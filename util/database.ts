@@ -1,4 +1,4 @@
-import * as mongodb from "mongodb";
+const { MongoClient } = require("mongodb");
 
 export const collections: any = {};
 
@@ -9,10 +9,13 @@ const COLLECTION_NAME_AUDIO = "audio";
 
 export const mongoConnect = async (callback: () => void) => {
     try {
-        const mongoClient = new mongodb.MongoClient(MONGODB_URI);
-        await mongoClient.connect();
+        const connection = await MongoClient.connect(MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            wtimeoutMS: 1000,
+        });
 
-        const db = mongoClient.db(DBNAME);
+        const db = connection.db(DBNAME);
 
         const inferenceCollection = db.collection(COLLECTION_NAME_INFERENCE);
         const audioCollection = db.collection(COLLECTION_NAME_AUDIO);

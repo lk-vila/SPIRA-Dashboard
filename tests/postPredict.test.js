@@ -4,6 +4,7 @@ const db = require("../util/database");
 const fs = require("fs");
 const request = require("supertest");
 const shasum = require("shasum");
+const { MongoClient } = require("mongodb");
 const { app } = require("../app");
 
 const spiraApiMock = jest
@@ -15,8 +16,17 @@ const mockCollection = {
     insertOne: jest.fn(),
 };
 
+const mockDb = {
+    collection: jest.fn(() => mockCollection),
+};
+
+const mockConnection = {
+    db: jest.fn(() => mockDb),
+};
+
 jest.mock("axios");
 jest.mock("../util/database.ts");
+jest.mock("mongodb");
 
 describe("POST /predict", () => {
     let response;
@@ -31,6 +41,7 @@ describe("POST /predict", () => {
 
     beforeEach(async () => {
         jest.spyOn(axios, "post").mockImplementation(spiraApiMock);
+        jest.spyOn(MongoClient, "connect").mockResolvedValue(mockConnection);
 
         db.collections = {
             audio: mockCollection,
