@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/result.css">
+        <script src="https://kit.fontawesome.com/419c6e93e6.js" crossorigin="anonymous"></script>
+        <title>SPIRA - Resultado</title>
+    </head>
+    <script type="text/javascript">
+        function submitForm(form){ // Submit button clicked
+            form.submitButton.disabled = true;
+            form.submitButton.value = "Aguarde o resultado...";
+            return true;
+        }
+    </script>
+    <body>
+        <nav class="nav-bar">
+            <div class="container">
+                <a href="/">INÍCIO</a>
+                <a href="/table">TABELA</a>
+            </div>
+        </nav>
+        <section class="header-section">
+            <div class="container">
+                <div class="spira-content">
+                    <!-- <h1>Estudo</br><span>SPIRA</span></h1> -->
+                    <p>A probabilidade de insuficiência respiratória calculada é: </p>
+                    <div><b><%= `${(result*100).toFixed(2)}%` %></b></div>
+                </div>
+                <div>
+                    <div class="user-form">
+                        <form method="POST" action="/predict" enctype="multipart/form-data" onSubmit="return submitForm(this);">
+                            <div class="gender-input">
+                                <label for="gender">Sexo</br></br></label>
+                                <input name="sexo" required type="radio" id="gender" value="M">Masculino</input>
+                                <input name="sexo" required type="radio" id="gender" value="F">Feminino</input>
+                            </div>
+                            <div class="age-input">
+                                <label for="age">Idade</br></label>
+                                <input name="idade" required type="number" id="age" min="1" max="200">
+                            </div>
+                            <div class="shortness-breath">
+                                <label for="breath">Nível de falta de ar</br></label>
+                                <input name="nivel_falta_de_ar" required type="number" id="breath" min="0" max="10">
+                            </div>
+                            <div class="description-input">
+                                <label for="description">Descrição (opcional)</br></label>
+                                <input name="descricao" type="text" id="description" maxlength="30">
+                            </div>
+                            <label for="audio_file">
+                                <div class="file-input">
+                                    <img src="images/sound.svg" alt="Áudio">
+                                    <input name="audio" required type="file" id="audio_file" accept=".wav">
+                                    <p id="file_name">ESCOLHER ARQUIVO</p>
+                                </div>
+                            </label>
+                            <div>
+                                <input type="submit" value="Enviar" class="submit-button" name="submitButton">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
