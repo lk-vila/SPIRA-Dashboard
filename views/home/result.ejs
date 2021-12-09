@@ -8,16 +8,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/reset.css">
-        <link rel="stylesheet" href="/css/home.css">
-        <title>SPIRA - Dashboard</title>
+        <link rel="stylesheet" href="/css/result.css">
+        <script src="https://kit.fontawesome.com/419c6e93e6.js" crossorigin="anonymous"></script>
+        <title>SPIRA - Resultado</title>
     </head>
     <script type="text/javascript">
-
-            $('input[type="file"]').on("change",function(e){
-                var fileName = e.target.files[0].name;
-                $(this).next('.file_name').html(fileName);
-            })
-
         function submitForm(form){ // Submit button clicked
             form.submitButton.disabled = true;
             form.submitButton.value = "Aguarde o resultado...";
@@ -33,9 +28,10 @@
         </nav>
         <section class="header-section">
             <div class="container">
-                <div class="spira-title">
-                    <h1>Estudo</br><img src="images/spira.svg" alt="SpiraLogo" class="logo"></h1>
-                    <p>Interface para inferência</p>
+                <div class="spira-content">
+                    <!-- <h1>Estudo</br><span>SPIRA</span></h1> -->
+                    <p>A probabilidade de insuficiência respiratória calculada é: </p>
+                    <div><b><%= `${(result*100).toFixed(2)}%` %></b></div>
                 </div>
                 <div>
                     <div class="user-form">
@@ -61,8 +57,7 @@
                                 <div class="file-input">
                                     <img src="images/sound.svg" alt="Áudio">
                                     <input name="audio" required type="file" id="audio_file" accept=".wav">
-                                    <label class="file_name" for="audio_file">ESCOLHER ARQUIVO</label>
-
+                                    <p id="file_name">ESCOLHER ARQUIVO</p>
                                 </div>
                             </label>
                             <div>

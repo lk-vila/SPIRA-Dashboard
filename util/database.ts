@@ -1,13 +1,13 @@
 const { MongoClient } = require("mongodb");
 
-export const collections: any = {};
+const collections: any = {};
 
 const MONGODB_URI = "mongodb://root:12345@localhost:27017/";
 const DBNAME = "test";
 const COLLECTION_NAME_INFERENCE = "inference";
 const COLLECTION_NAME_AUDIO = "audio";
 
-export const mongoConnect = async (callback: () => void) => {
+const mongoConnect = async (callback: () => void) => {
     try {
         const connection = await MongoClient.connect(MONGODB_URI, {
             useNewUrlParser: true,
@@ -28,3 +28,5 @@ export const mongoConnect = async (callback: () => void) => {
         console.error(e);
     }
 };
+
+export { mongoConnect, collections };
