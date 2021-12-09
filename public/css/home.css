@@ -5,9 +5,17 @@
 :root{
     --primary: #8B63FF;
     --primary-dark: #4C2289;
+    --primary-light: #F0EBFF;
     --text: #52506C;
     --danger: #FF006B;
     --gray: #EEEFF5;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --shadow: #ccc;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
 }
 /* 
 input[type='number'] {
@@ -20,9 +28,30 @@ input::-webkit-inner-spin-button {
 }
 
 .container {
-    padding: 80px 0;
-    width: 960px;
+    width: 1140px;
     margin: 0 auto;
+}
+
+nav {
+    background-image: linear-gradient(to left, var(--primary), var(--primary-dark));
+    padding: 30px;
+}
+
+nav div {
+    margin-left: auto;
+}
+
+nav a { 
+    text-decoration: none;
+    font-weight: lighter;
+    color: white;
+    letter-spacing: 1.2px;
+    padding-right: 24px;
+}
+
+nav a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
 }
 
 h1 {
@@ -31,7 +60,8 @@ h1 {
 }
 
 .header-section {
-    background: var(--gray);
+    padding: 90px 0;
+    background: var(--gray) url("/images/hero_bg.jpg") no-repeat center center;
 }
 
 .header-section > div {
@@ -39,12 +69,19 @@ h1 {
 }
 
 .spira-title {
-    padding-right: 200px;
-    color: var(--text);
+    padding-top: 60px;
+    padding-right: 260px;
+    color: #FAF9F6;
+    font-family: serif;
 }
 
 .spira-title span {
     font-size: 4em;
+}
+
+.spira-title img {
+    padding: 10px 0;
+    height: 120px;
 }
 
 .spira-title p {
@@ -58,22 +95,34 @@ h1 {
     background: white;
     padding: 36px 48px;
     border-radius: 12px;
-    box-shadow: 10px 10px 12px 2px var(--gray);
+    opacity: 95%;
 }
 
-input {
+.user-form div {
+    padding: 14px 0;
+}
+
+input[type=number], input[type=text] {
     padding: 10px;
     border: none;
+    border-bottom: 2px solid;
+    width: 100%;
+    font-size: 1.25em;
+    font-family: 'Rubik';
+}
+
+input[type=number]:focus, input[type=text]:focus {
+    border: none;
+    outline: none;
     border-bottom: 2px solid var(--primary);
 }
 
-.gender-input {
-    padding: 12px 0;
+input[type=number]::selection, input[type=text]::selection {
+    background-color: var(--primary-light);
 }
 
-input[type=radio] {
-    background: var(--primary);
-    color: red;
+label {
+    font-weight: bold;
 }
 
 .age-input {
@@ -81,20 +130,54 @@ input[type=radio] {
 }
 
 .file-input {
-    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed;
+    border-radius: 10px;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    text-align: center;
+    height: 80px;
+    width: 300px;
+    font-weight: lighter;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.file-input img {
+    padding-right: 6px;
+    filter: invert(19%) sepia(21%) saturate(6428%) hue-rotate(250deg) brightness(86%) contrast(103%);
+}
+
+.file-input>input {
+    display: none;
+}
+
+::-webkit-file-upload-button {
+    display: none;
 }
 
 .submit-button {
-    border: none;
+    border: 1px;
+    border-radius: 0.25rem;
     padding: 18px 24px;
-    background: var(--primary-dark);
+    background: var(--pink);
+    border-color: #dc3545;
     text-transform: uppercase;
     color: var(--gray);
     font-weight: bold;
     letter-spacing: 2px;
     width: 100%;
+    cursor: pointer;
+}
+
+.submit-button:disabled{
+    background-color: #cccccc !important;
+    border-color: #cccccc;
+    cursor: default;
 }
 
 .submit-button:hover {
-    background: var(--primary);
+    background: var(--red);
 }
