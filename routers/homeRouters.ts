@@ -12,7 +12,7 @@ router.get('/test', test)
 
 router.get('/table', getTable)
 
-router.get('/dump', getDataAsCSV)
+router.get('/dump/:tableName', getDataAsCSV)
 
 router.post('/predict', upload.single('audio'),  postPredict)
 
