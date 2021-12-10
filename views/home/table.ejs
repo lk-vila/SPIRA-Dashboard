@@ -27,20 +27,23 @@
         }
 
         function chooseTable() {
-            const option = document.getElementById("table_selection").value;
+            const audioTab = document.getElementById("audio-tab");
+            const inferenceTab = document.getElementById("inference-tab");
 
-            if (option === "inference") {
+            if (option === "inference" && !inferenceTab.className.includes("active")) {
+                inferenceTab.className += " active";
+                audioTab.className = audioTab.className.replace(" active", "");
                 document.getElementById("inference_table").style.display = "";
                 document.getElementById("audio_table").style.display = "none";
-            } else {
+            } else if (option === "audio" && !audioTab.className.includes("active")) {
+                audioTab.className += " active";
+                inferenceTab.className = inferenceTab.className.replace(" active", "");
                 document.getElementById("inference_table").style.display = "none";
                 document.getElementById("audio_table").style.display = "";
             }
         }
 
         function chooseFilter() {
-            const option = document.getElementById("table_selection").value;
-
             if (option === "inference") {
                 document.getElementById("inference_table_filter").style.display = "";
                 document.getElementById("audio_table_filter").style.display = "none";
@@ -53,10 +56,9 @@
         function filterDataByParameter() {
             let td;
             
-            const table_select = document.getElementById("table_selection").value;
-            const table = document.getElementById(`${table_select}_table`);
+            const table = document.getElementById(`${option}_table`);
 
-            const filter_element = document.getElementById(`${table_select}_table_filter`);
+            const filter_element = document.getElementById(`${option}_table_filter`);
             const input = filter_element.getElementsByTagName("input")[0];
             const select = filter_element.getElementsByTagName("select")[0];
             const tr = table.getElementsByTagName("tr");
@@ -83,32 +85,29 @@
             document.getElementById("inference_table_filter").getElementsByTagName("input")[0].value = clicked_hash;
             filterDataByParameter();
 
-            document.getElementById("table_selection").value = "audio";
+            option='audio';
+            console.log("AQUI")
             choose();
 
             index = document.getElementById("audio_table").getElementsByTagName("thead")[0].getElementsByTagName("th").length-1;
             document.getElementById("audio_table_filter").getElementsByTagName("select")[0].selectedIndex = index;
             document.getElementById("audio_table_filter").getElementsByTagName("input")[0].value = clicked_hash;
             filterDataByParameter();
-        } 
+        }
+
     </script>
     <body>
         <nav class="nav-bar">
             <div class="container">
                 <a href="/">INÍCIO</a>
-                <a href="/table">TABELA</a>
+                <a href="/table" class="selectedNav">TABELA</a>
             </div>
         </nav>
-        <section class="custom-container">
+        <section class="container">
             <div class="flex-container">
-                <div>
-                    <select id="table_selection" onchange="choose()">
-                        <option value="inference">Inferência</option>
-                        <option value="audio">Áudio</option>
-                    </select>
-                </div>
+                <div></div><div></div>
                 <div class="spira-title">
-                    <h1 id="title"><span class="blue"></span>SPIRA Table<span class="blue"></span></h1>
+                    <h1 id="title">SPIRA Table</h1>
                     <h2>Criado em associação com <a href="http://ccsl.ime.usp.br/wiki/LabXP" target="_blank">LABXP</a></h2>
                 </div>
                 <div>
@@ -116,74 +115,85 @@
                 </div>
             </div>
         </section>
-        <section>
-            <div id="audio_table_filter">
-                <input name="input" type="text" id="audio_input" onkeyup="filterDataByParameter()" placeholder="Filtrar por" title="Type in a name">
-                <select name="field" onclick="filterDataByParameter()">
-                    <% audio_table_columns.forEach(function (column, i) { %>
-                        <option value="<%= i %>"> <%= column %> </option>
-                    <% }); %>
-                </select>
-            </div>
-            <div id="inference_table_filter">
-                <input name="input" type="text" id="inference_input" onkeyup="filterDataByParameter()" placeholder="Filtrar por" title="Type in a name">
-                <select name="field" onclick="filterDataByParameter()">
-                    <% inference_table_columns.forEach(function (column, i) { %>
-                        <option value="<%= i %>"> <%= column %> </option>
-                    <% }); %>
-                </select>
+        <section class="container">
+            <div class="flex-container">
+                <div class="tab">
+                    <button id="inference-tab" onclick="option='inference'; choose();">Inferências</button>
+                    <button id="audio-tab" onclick="option='audio'; choose();">Áudios</button>
+                </div>
+                <div id="audio_table_filter">
+                    <input name="input" type="text" id="audio_input" onkeyup="filterDataByParameter()" placeholder="Filtrar por" title="Type in a name">
+                    <select name="field" onclick="filterDataByParameter()">
+                        <% audio_table_columns.forEach(function (column, i) { %>
+                            <option value="<%= i %>"> <%= column %> </option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div id="inference_table_filter">
+                    <input name="input" type="text" id="inference_input" onkeyup="filterDataByParameter()" placeholder="Filtrar por" title="Type in a name">
+                    <select name="field" onclick="filterDataByParameter()">
+                        <% inference_table_columns.forEach(function (column, i) { %>
+                            <option value="<%= i %>"> <%= column %> </option>
+                        <% }); %>
+                    </select>
+                </div>
             </div>
         </section>
-        <table id="inference_table" class="container">
-            <thead>
-                <tr>
-                    <% for( let column of inference_table_columns ) { %>
-                        <th><h1 class="variableTitle"> <%= column %> </h1></th>
+        <section class="container">
+            <table id="inference_table" class="table-container">
+                <thead>
+                    <tr>
+                        <% for( let column of inference_table_columns ) { %>
+                            <th><h1 class="variableTitle"> <%= column %> </h1></th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(inferenceList) { %>
+                        <% for(let inference of inferenceList) { %>
+                            <tr>
+                                <td> <%= inference.timestamp %></td>
+                                <td> <%= inference.description %></td>
+                                <td> <%= inference.result %></td>
+                                <td> <%= inference.sex %></td>
+                                <td> <%= inference.age %></td>
+                                <td> <%= inference.level %></td>
+                                <td onclick='filterByHash("<%= inference.audio_hash %>")' class="hash_link"> <%= inference.audio_hash %></td>
+                            </tr>
+                        <% } %>
                     <% } %>
-                </tr>
-            </thead>
-            <tbody>
-                <% if(inferenceList) { %>
-                    <% for(let inference of inferenceList) { %>
-                        <tr>
-                            <td> <%= inference.timestamp %></td>
-                            <td> <%= inference.description %></td>
-                            <td> <%= inference.result %></td>
-                            <td> <%= inference.sex %></td>
-                            <td> <%= inference.age %></td>
-                            <td> <%= inference.level %></td>
-                            <td onclick='filterByHash("<%= inference.audio_hash %>")' class="hash_link"> <%= inference.audio_hash %></td>
-                        </tr>
+                </tbody>
+            </table>
+            <table id="audio_table" class="table-container">
+                <thead>
+                    <tr>
+                        <% for( let column of audio_table_columns ) { %>
+                            <th><h1 class="variableTitle"> <%= column %> </h1></th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(audioList) { %>
+                        <% for(let audio of audioList) { %>
+                            <tr>
+                                <td> <%= audio.date %></td>
+                                <td> <%= audio.original_name %></td>
+                                <td> <%= audio.recent_name %></td>
+                                <td> <%= audio.hash %></td>
+                            </tr>
+                        <% } %>
                     <% } %>
-                <% } %>
-            </tbody>
-        </table>
-
-        <table id="audio_table" class="container">
-            <thead>
-                <tr>
-                    <% for( let column of audio_table_columns ) { %>
-                        <th><h1 class="variableTitle"> <%= column %> </h1></th>
-                    <% } %>
-                </tr>
-            </thead>
-            <tbody>
-                <% if(audioList) { %>
-                    <% for(let audio of audioList) { %>
-                        <tr>
-                            <td> <%= audio.date %></td>
-                            <td> <%= audio.original_name %></td>
-                            <td> <%= audio.recent_name %></td>
-                            <td> <%= audio.hash %></td>
-                        </tr>
-                    <% } %>
-                <% } %>
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </section>
         <script>
+            var option = "inference"
             document.getElementById("audio_table").style.display = "none";
             document.getElementById("audio_table_filter").style.display = "none";
+            document.getElementById("inference-tab").className += " active";
+            document.getElementsByClassName('table-container')[0]
+                    .getElementsByTagName('thead')[0]
+                    .getElementsByTagName('th')[0].style.borderRadius = '0'
 
         </script>
     </body>

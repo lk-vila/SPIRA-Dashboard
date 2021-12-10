@@ -52,7 +52,7 @@ const getDataAsCSV = async (req: Request , res: Response, next: NextFunction) =>
 const postPredict = async (req: Request , res: Response, next: NextFunction) => {
     if (req.file && req.body.sexo && req.body.idade && req.body.nivel_falta_de_ar) {
         try {
-            const timestamp = (new Date()).toUTCString()
+            const timestamp = (new Date()).toISOString()
             const formData = new FormData()
             
             const sex = req.body.sexo
