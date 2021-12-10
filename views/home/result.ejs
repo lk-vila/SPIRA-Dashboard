@@ -56,8 +56,8 @@
                             <label for="audio_file">
                                 <div class="file-input">
                                     <img src="images/sound.svg" alt="Áudio">
-                                    <input name="audio" required type="file" id="audio_file" accept=".wav">
-                                    <p id="file_name">ESCOLHER ARQUIVO</p>
+                                    <input name="audio" required type="file" id="audio_file" accept=".wav" oninput="audioFile(this)">
+                                    <p name="file_name" id="file_name" type="text">Selecione um áudio</p>
                                 </div>
                             </label>
                             <div>

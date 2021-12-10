@@ -16,6 +16,7 @@
 
 body {
     font-family: 'Rubik', sans-serif;
+    background-color: var(--primary-light);
 }
 /* 
 input[type='number'] {
@@ -62,6 +63,7 @@ h1 {
 .header-section {
     padding: 90px 0;
     background: var(--gray) url("/images/hero_bg.jpg") no-repeat center center;
+    background-size: cover;
 }
 
 .header-section > div {
