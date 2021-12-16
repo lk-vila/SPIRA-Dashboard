@@ -2,13 +2,13 @@
     box-sizing: border-box;
 }
 
-:root{
-    --primary: #8B63FF;
-    --primary-dark: #4C2289;
-    --primary-light: #F0EBFF;
-    --text: #52506C;
-    --danger: #FF006B;
-    --gray: #EEEFF5;
+:root {
+    --primary: #8b63ff;
+    --primary-dark: #4c2289;
+    --primary-light: #f0ebff;
+    --text: #52506c;
+    --danger: #ff006b;
+    --gray: #eeeff5;
     --pink: #e83e8c;
     --red: #dc3545;
     --shadow: #ccc;
@@ -34,7 +34,11 @@ input::-webkit-inner-spin-button {
 }
 
 nav {
-    background-image: linear-gradient(to left, var(--primary), var(--primary-dark));
+    background-image: linear-gradient(
+        to left,
+        var(--primary),
+        var(--primary-dark)
+    );
     padding: 30px;
 }
 
@@ -42,7 +46,7 @@ nav div {
     margin-left: auto;
 }
 
-nav a { 
+nav a {
     text-decoration: none;
     font-weight: lighter;
     color: white;
@@ -73,7 +77,7 @@ h1 {
 .spira-title {
     padding-top: 60px;
     padding-right: 260px;
-    color: #FAF9F6;
+    color: #faf9f6;
     font-family: serif;
 }
 
@@ -104,22 +108,25 @@ h1 {
     padding: 14px 0;
 }
 
-input[type=number], input[type=text] {
+input[type="number"],
+input[type="text"] {
     padding: 10px;
     border: none;
     border-bottom: 2px solid;
     width: 100%;
     font-size: 1.25em;
-    font-family: 'Rubik';
+    font-family: "Rubik";
 }
 
-input[type=number]:focus, input[type=text]:focus {
+input[type="number"]:focus,
+input[type="text"]:focus {
     border: none;
     outline: none;
     border-bottom: 2px solid var(--primary);
 }
 
-input[type=number]::selection, input[type=text]::selection {
+input[type="number"]::selection,
+input[type="text"]::selection {
     background-color: var(--primary-light);
 }
 
@@ -149,10 +156,11 @@ label {
 
 .file-input img {
     padding-right: 6px;
-    filter: invert(19%) sepia(21%) saturate(6428%) hue-rotate(250deg) brightness(86%) contrast(103%);
+    filter: invert(19%) sepia(21%) saturate(6428%) hue-rotate(250deg)
+        brightness(86%) contrast(103%);
 }
 
-.file-input>input {
+.file-input > input {
     display: none;
 }
 
@@ -174,7 +182,7 @@ label {
     cursor: pointer;
 }
 
-.submit-button:disabled{
+.submit-button:disabled {
     background-color: #cccccc !important;
     border-color: #cccccc;
     cursor: default;

@@ -1,15 +1,14 @@
-
 /*	
 	Side Navigation Menu V2, RWD
 	===================
 	Author: https://github.com/pablorgarcia
  */
 
- @charset "UTF-8";
- @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :root{
@@ -31,7 +30,7 @@
 }
 
 body {
-  font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
 }
 
 nav {
@@ -39,17 +38,17 @@ nav {
   padding: 30px 0;
 }
 
-nav a { 
-  text-decoration: none;
-  font-weight: lighter;
-  color: white;
-  letter-spacing: 1.2px;
-  padding-right: 24px;
+nav a {
+    text-decoration: none;
+    font-weight: lighter;
+    color: white;
+    letter-spacing: 1.2px;
+    padding-right: 24px;
 }
 
 nav a:hover {
-  color: var(--primary-light);
-  text-decoration: underline;
+    color: var(--primary-light);
+    text-decoration: underline;
 }
 
 h1 {
@@ -159,13 +158,13 @@ input {
 }
 
 .spira-title {
-  padding: 5% 0;
+    padding: 5% 0;
 }
 
 .flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .tab {
@@ -210,7 +209,6 @@ table {
 /* .container td:first-child { color: #c671ff; } */
 
 
-
 .table-container tr:hover {
   background-color: #464A52;
   -webkit-box-shadow: 0 6px 6px -6px #0E1119;
@@ -238,58 +236,58 @@ table {
 }
 
 .button {
-  display: inline-block;
-  border-radius: 4px;
-  background: var(--pink);
-  border: 1px;
-  border-radius: 0.25rem;
-  border-color: #dc3545;
-  color: var(--gray);
-  text-align: center;
-  font-size: 18px;
-  padding: 15px;
-  width: 180px;
-  cursor: pointer;
-  margin: 5px;
+    display: inline-block;
+    border-radius: 4px;
+    background: var(--pink);
+    border: 1px;
+    border-radius: 0.25rem;
+    border-color: #dc3545;
+    color: var(--gray);
+    text-align: center;
+    font-size: 18px;
+    padding: 15px;
+    width: 180px;
+    cursor: pointer;
+    margin: 5px;
 }
 
 .button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
 .button span:after {
-  font-family: FontAwesome;
-  content: '\f0ab';
-  position: absolute;
-  opacity: 0;
-  top: 1px;
-  right: -20px;
-  transition: 0.4s;
+    font-family: FontAwesome;
+    content: "\f0ab";
+    position: absolute;
+    opacity: 0;
+    top: 1px;
+    right: -20px;
+    transition: 0.4s;
 }
 
 .button:hover {
-  background-color: var(--red)
+    background-color: var(--red);
 }
 
 .button:hover span {
-  padding-right: 25px;
+    padding-right: 25px;
 }
 
 .button:hover span:after {
-  opacity: 1;
-  right: 0;
+    opacity: 1;
+    right: 0;
 }
 
 #title {
-  font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
 }
 
 .flex {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 #filter {
@@ -317,15 +315,17 @@ select {
 /* <option> colors */
 /* Remove focus outline */
 option {
-  color: inherit;
-  background-color: --option;
+    color: inherit;
+    background-color: --option;
 }
 
 option:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 @media (max-width: 800px) {
-.container td:nth-child(4),
-.container th:nth-child(4) { display: none; }
+    .container td:nth-child(4),
+    .container th:nth-child(4) {
+        display: none;
+    }
 }
