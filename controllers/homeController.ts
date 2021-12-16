@@ -73,7 +73,7 @@ const postPredict = async (req: Request , res: Response, next: NextFunction) => 
             formData.append("nivel_falta_de_ar", level)
 
             // const spiraApiResponse = await axios.post("https://spira-api-demo.herokuapp.com/predict", formData, {
-            const spiraApiResponse = await axios.post("http://localhost:5000/predict", formData, {
+            const spiraApiResponse = await axios.post("http://127.0.0.1:5000/predict", formData, {
                 headers: formData.getHeaders()
             })
             

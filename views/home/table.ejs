@@ -12,8 +12,6 @@
     </head>
     <script>
         function dumpTable() {
-            const option = document.getElementById("table_selection").value;
-
             if (option === "inference") {
                 location.replace(`${window.location.origin}/dump/inference`);
             } else {
@@ -86,7 +84,6 @@
             filterDataByParameter();
 
             option='audio';
-            console.log("AQUI")
             choose();
 
             index = document.getElementById("audio_table").getElementsByTagName("thead")[0].getElementsByTagName("th").length-1;
