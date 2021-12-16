@@ -12,11 +12,17 @@
         <title>SPIRA - Dashboard</title>
     </head>
     <script type="text/javascript">
-
-            $('input[type="file"]').on("change",function(e){
-                var fileName = e.target.files[0].name;
-                $(this).next('.file_name').html(fileName);
-            })
+        function getFile(filePath) {
+            return filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[0];
+        }
+        
+        function audioFile(e){
+            if(audio_file.value != ""){
+                file_name.innerHTML = getFile(audio_file.value);
+            } else{
+                file_name.innerHTML = "Selecione um áudio";
+            }
+        };
 
         function submitForm(form){ // Submit button clicked
             form.submitButton.disabled = true;
@@ -60,9 +66,8 @@
                             <label for="audio_file">
                                 <div class="file-input">
                                     <img src="images/sound.svg" alt="Áudio">
-                                    <input name="audio" required type="file" id="audio_file" accept=".wav">
-                                    <label class="file_name" for="audio_file">ESCOLHER ARQUIVO</label>
-
+                                    <input name="audio" required type="file" id="audio_file" accept=".wav" oninput="audioFile(this)">
+                                    <p name="file_name" id="file_name" type="text">Selecione um áudio</p>
                                 </div>
                             </label>
                             <div>
@@ -72,6 +77,9 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section>
+
         </section>
     </body>
 </html>

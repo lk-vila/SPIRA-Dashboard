@@ -78,47 +78,38 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
         req.body.nivel_falta_de_ar
     ) {
         try {
-            const timestamp = new Date().toUTCString();
-            const formData = new FormData();
+            const timestamp = (new Date()).toISOString()
+            const formData = new FormData()
+            
+            const sex = req.body.sexo
+            const age = req.body.idade
+            const level =  req.body.nivel_falta_de_ar
+            var description = ""
 
-            const sex = req.body.sexo;
-            const age = req.body.idade;
-            const level = req.body.nivel_falta_de_ar;
-            const description = req.body.description || "";
+            if(req.body.descricao) {
+                description = req.body.descricao
+            }
 
-            fs.writeFileSync(
-                `resources/audio/${timestamp}.wav`,
-                req.file.buffer
-            );
-            const stream = fs.createReadStream(
-                `resources/audio/${timestamp}.wav`
-            );
+            fs.writeFileSync(`resources/audio/${timestamp}.wav`, req.file.buffer)
+            const stream = fs.createReadStream(`resources/audio/${timestamp}.wav`)
 
-            formData.append("audio", stream);
-            formData.append("sexo", sex);
-            formData.append("idade", age);
-            formData.append("nivel_falta_de_ar", level);
+            formData.append("audio", stream)
+            formData.append("sexo", sex)
+            formData.append("idade", age)
+            formData.append("nivel_falta_de_ar", level)
 
             // const spiraApiResponse = await axios.post("https://spira-api-demo.herokuapp.com/predict", formData, {
-            const spiraApiResponse = await axios.post(
-                "http://localhost:5000/predict",
-                formData,
-                {
-                    headers: formData.getHeaders(),
-                }
-            );
+            const spiraApiResponse = await axios.post("http://127.0.0.1:5000/predict", formData, {
+                headers: formData.getHeaders()
+            })
+            
+            let audio_name = req.file.originalname
+            const audio_file = fs.readFileSync(`resources/audio/${timestamp}.wav`)
+            const sha1sum = shasum(audio_file)
+            const result = spiraApiResponse.data.resultado
 
-            const audio_name = req.file.originalname;
-            const audio_file = fs.readFileSync(
-                `resources/audio/${timestamp}.wav`
-            );
-            const sha1sum = shasum(audio_file);
-            const result = spiraApiResponse.data.resultado;
-
-            const existing_audio = await collections.audio.findOne({
-                hash: `${sha1sum}`,
-            });
-            if (!existing_audio) {
+            const existing_audio = await collections.audio.findOne({"hash": `${sha1sum}`})
+            if(!existing_audio) {
                 collections.audio.insertOne({
                     date: `${timestamp}`,
                     original_name: `${audio_name}`,
