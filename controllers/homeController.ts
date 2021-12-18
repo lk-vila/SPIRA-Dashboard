@@ -64,9 +64,9 @@ const getDataAsCSV = async (
     const csvData = json2csvParser.parse(data);
     const timestamp = Date.now();
 
-    fs.writeFileSync(`resources/csv/${timestamp}.csv`, csvData);
-    res.download(`resources/csv/${timestamp}.csv`, () =>
-        unlinkFile("csv", `${timestamp}.csv`)
+    fs.writeFileSync(`resources/csv-${timestamp}.csv`, csvData);
+    res.download(`resources/csv-${timestamp}.csv`, () =>
+        unlinkFile(`resources/csv-${timestamp}.csv`)
     );
 };
 
@@ -78,20 +78,17 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
         req.body.nivel_falta_de_ar
     ) {
         try {
-            const timestamp = (new Date()).toISOString()
+            const timestamp = new Date().toISOString()
             const formData = new FormData()
-            
+
             const sex = req.body.sexo
             const age = req.body.idade
             const level =  req.body.nivel_falta_de_ar
-            var description = ""
+            const description = req.body.descricao || ""
+            const audioFilePath = `resources/audio-${timestamp}.wav`
 
-            if(req.body.descricao) {
-                description = req.body.descricao
-            }
-
-            fs.writeFileSync(`resources/audio/${timestamp}.wav`, req.file.buffer)
-            const stream = fs.createReadStream(`resources/audio/${timestamp}.wav`)
+            fs.writeFileSync(audioFilePath, req.file.buffer)
+            const stream = fs.createReadStream(audioFilePath)
 
             formData.append("audio", stream)
             formData.append("sexo", sex)
@@ -102,14 +99,14 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
             const spiraApiResponse = await axios.post("http://127.0.0.1:5000/predict", formData, {
                 headers: formData.getHeaders()
             })
-            
+
             let audio_name = req.file.originalname
-            const audio_file = fs.readFileSync(`resources/audio/${timestamp}.wav`)
+            const audio_file = fs.readFileSync(audioFilePath)
             const sha1sum = shasum(audio_file)
             const result = spiraApiResponse.data.resultado
 
             const existing_audio = await collections.audio.findOne({"hash": `${sha1sum}`})
-            if(!existing_audio) {
+            if (!existing_audio) {
                 collections.audio.insertOne({
                     date: `${timestamp}`,
                     original_name: `${audio_name}`,
@@ -133,7 +130,7 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
                 result: `${result}`,
             });
 
-            unlinkFile("audio", `${timestamp}.wav`);
+            unlinkFile(audioFilePath);
 
             if (req.body.isJSON && req.body.isJSON.toLowerCase() === "true") {
                 return res.status(200).json({ resultado: result });
@@ -148,10 +145,9 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({ error: "No audio file sent" });
 };
 
-const unlinkFile = (dir: String, fileName: String) => {
-    fs.unlink(`resources/${dir}/${fileName}`, (err) => {
+const unlinkFile = (fileName: string) => {
+    fs.unlink(fileName, (err) => {
         if (err) throw err;
-        //console.log(`resources/audio/${timestamp}.wav was deleted`);
     });
 };
 

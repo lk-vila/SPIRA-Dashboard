@@ -14,6 +14,7 @@ const spiraApiMock = jest
 const mockCollection = {
     findOne: jest.fn(),
     insertOne: jest.fn(),
+    updateOne: jest.fn()
 };
 
 const mockDb = {
@@ -50,6 +51,7 @@ describe("POST /predict", () => {
 
         response = await request(app)
             .post("/predict")
+            .field("descricao", "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3")
             .field("sexo", "M")
             .field("idade", 25)
             .field("nivel_falta_de_ar", 2)
@@ -64,28 +66,28 @@ describe("POST /predict", () => {
         expect(response.statusCode).toEqual(200);
     });
 
-    it("serializes response from spira API", () => {
-        expect(response.body).toEqual({
-            resultado: 0.999,
-        });
+    it("renders response from spira API in HTML", () => {
+        expect(response.text).toMatch('A probabilidade de insuficiência respiratória calculada é:')
+        expect(response.text).toMatch('99.90\%')
     });
 
     it("saves audio data", () => {
-        const audioFile = fs.readFileSync("tests/fixtures/sample.wav");
-
         expect(mockCollection.insertOne).toBeCalledWith({
-            hash: shasum(audioFile),
-            original_name: "sample.wav",
+            date: new Date().toISOString(),
+            original_name: 'sample.wav',
+            recent_name: 'sample.wav',
+            hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a'
         });
     });
 
     it("saves inference data", () => {
         expect(mockCollection.insertOne).toBeCalledWith({
-            timestamp: Date.now().toString(),
-            audio_name: "sample.wav",
+            timestamp: new Date().toISOString(),
+            description: "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3",
             sex: "M",
             age: "25",
             level: "2",
+            audio_hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a',
             result: "0.999",
         });
     });
@@ -100,6 +102,7 @@ describe("POST /predict", () => {
                 .post("/predict")
                 .field("sexo", "M")
                 .field("idade", 25)
+                .field("descricao", "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3")
                 .field("nivel_falta_de_ar", 2)
                 .attach("audio", "tests/fixtures/sample.wav");
         });
@@ -119,6 +122,7 @@ describe("POST /predict", () => {
                 .post("/predict")
                 .field("sexo", "M")
                 .field("idade", 25)
+                .field("descricao", "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3")
                 .field("nivel_falta_de_ar", 2);
         });
 
@@ -138,34 +142,39 @@ describe("POST /predict", () => {
             hash = shasum(fs.readFileSync("tests/fixtures/sample.wav"));
 
             mockCollection.findOne.mockImplementation(() => ({
-                hash,
+                date: new Date().toISOString(),
+                recent_name: 'original_name.wav',
                 original_name: "original_name.wav",
+                hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a'
             }));
 
             response = await request(app)
                 .post("/predict")
                 .field("sexo", "M")
                 .field("idade", 25)
+                .field("descricao", "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3")
                 .field("nivel_falta_de_ar", 2)
                 .attach("audio", "tests/fixtures/sample.wav");
         });
 
         it("saves inference data using original audio name", async () => {
             expect(mockCollection.insertOne).toBeCalledWith({
-                timestamp: Date.now().toString(),
-                audio_name: "original_name.wav",
+                timestamp: new Date().toISOString(),
+                description: "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3",
                 sex: "M",
                 age: "25",
                 level: "2",
+                audio_hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a',
                 result: "0.999",
             });
         });
 
         it("does not save audio data again", async () => {
-            expect(mockCollection.insertOne).not.toBeCalledWith({
-                hash,
-                original_name: "sample.wav",
-            });
+            expect(mockCollection.updateOne).toBeCalledWith(
+                { hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a' },
+                { $set: { recent_name: 'sample.wav' } }
+            )
         });
     });
+    
 });
