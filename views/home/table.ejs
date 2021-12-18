@@ -148,7 +148,7 @@
                 <tbody>
                     <% if(inferenceList) { %>
                         <% for(let inference of inferenceList) { %>
-                            <tr>
+                            <tr class="inference-row">
                                 <td> <%= inference.timestamp %></td>
                                 <td> <%= inference.description %></td>
                                 <td> <%= inference.result %></td>
@@ -172,7 +172,7 @@
                 <tbody>
                     <% if(audioList) { %>
                         <% for(let audio of audioList) { %>
-                            <tr>
+                            <tr class="audio-row">
                                 <td> <%= audio.date %></td>
                                 <td> <%= audio.original_name %></td>
                                 <td> <%= audio.recent_name %></td>
