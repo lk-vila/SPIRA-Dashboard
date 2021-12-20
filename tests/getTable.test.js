@@ -22,8 +22,6 @@ const mockClient = {
 
 const app = getApp({ mockClient })
 
-jest.mock("mongodb");
-
 describe("GET /table inference", () => {
     const inference1 = {
         timestamp: Date.now().toString(),
@@ -90,8 +88,6 @@ describe("GET /table inference", () => {
         expect(response.text).toMatch(inference2.level);
         expect(response.text).toMatch(inference2.audio_hash);
     });
-
-    
 });
 
 describe("GET /table audio", () => {
