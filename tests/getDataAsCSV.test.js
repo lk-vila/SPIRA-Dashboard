@@ -1,8 +1,7 @@
 const MockDate = require("mockdate");
 const db = require("../util/database");
 const request = require("supertest");
-const { MongoClient } = require("mongodb");
-const { app } = require("../app");
+const { getApp } = require("../app");
 
 const mockArray = jest.fn()
 
@@ -18,13 +17,14 @@ const mockDb = {
     collection: jest.fn(() => mockCollection),
 };
 
-const mockConnection = {
+const mockClient = {
     db: jest.fn(() => mockDb),
 };
 
+const app = getApp({ mockClient })
+
 jest.mock("axios");
 jest.mock("../util/database.ts");
-jest.mock("mongodb");
 
 describe("GET /dump/:tableName", () => {
     let response;
@@ -38,12 +38,10 @@ describe("GET /dump/:tableName", () => {
     });
 
     beforeEach(() => {
-        jest.spyOn(MongoClient, "connect").mockResolvedValue(mockConnection);
-
-        db.collections = {
+        jest.spyOn(db, 'getCollections').mockImplementation(() => ({
             audio: mockCollection,
             inference: mockCollection,
-        };
+        }))
     })
 
     describe("when tableName is inference", () => {

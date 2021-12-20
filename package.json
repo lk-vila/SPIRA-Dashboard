@@ -10,7 +10,7 @@
         "format:fix": "prettier --write .",
         "dev": "nodemon --exec npx ts-node app.ts",
         "start": "npx ts-node app.ts",
-        "test": "jest",
+        "test": "jest --coverage",
         "test:watch": "jest --watchAll"
     },
     "devDependencies": {
