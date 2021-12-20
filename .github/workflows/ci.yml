@@ -13,14 +13,6 @@ jobs:
       with:
         node-version: '12'
         cache: 'yarn'
-
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.7.0
-      with:
-        mongodb-version: '5.0'
-        mongodb-username: root
-        mongodb-password: '12345'
-        mongodb-db: test
         
     - name: Install deps
       run: yarn

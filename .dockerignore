@@ -1,6 +1,6 @@
-files
 node_modules
 out
-.env
+.git
+.gitignore
 *.csv
 *.log
