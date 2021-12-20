@@ -2,7 +2,11 @@ const { MongoClient } = require("mongodb");
 
 const collections: any = {};
 
-const MONGODB_URI = "mongodb://root:12345@localhost:27017/";
+const user = process.env.MONGO_INITDB_ROOT_USERNAME
+const pass = process.env.MONGO_INITDB_ROOT_PASSWORD
+const protocol = process.env.MONGO_PROTOCOL || "mongodb"
+const at = process.env.MONGO_URL || "db:27017/"
+const MONGODB_URI = `${protocol}://${user}:${pass}@${at}`;
 const DBNAME = "test";
 const COLLECTION_NAME_INFERENCE = "inference";
 const COLLECTION_NAME_AUDIO = "audio";
