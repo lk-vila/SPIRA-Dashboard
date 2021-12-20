@@ -1,29 +1,41 @@
 import express from "express";
 import favicon from "serve-favicon";
-import homeRoutes from "./routers/homeRouters";
 import path from "path";
-import { mongoConnect } from "./util/database";
+import multer from "multer";
+import { MongoClient } from "mongodb";
+import {
+    postPredict,
+    getTable,
+    getHome,
+    getDataAsCSV,
+} from "./controllers";
 
-const app = express();
-const port = process.env.PORT || 3491;
+type AppContext = {
+    mongoClient: MongoClient
+}
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(favicon(path.join(__dirname, "assets", "favicon", "spira.ico")));
+function getApp ({ mongoClient }: AppContext) {
+    const app = express();
+    const upload = multer({ storage: multer.memoryStorage() });
 
-// Sets EJS as view engine
-app.set("view engine", "ejs");
-app.set("views", "views");
-app.use(express.static(path.join(__dirname, "public")));
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(favicon(path.join(__dirname, "assets", "favicon", "spira.ico")));
 
-app.use(homeRoutes);
+    // Sets EJS as view engine
+    app.set("view engine", "ejs");
+    app.set("views", "views");
+    app.use(express.static(path.join(__dirname, "public")));
 
-mongoConnect(() => {
-    app.listen(port, () =>
-        console.log(
-            `⚡️ [server]: Server is running at https://localhost:${port}`
-        )
-    );
-});
+    // @ts-expect-error
+    app.mongoClient = mongoClient;
 
-export { app };
+    app.get("/",getHome);
+    app.get("/table", getTable);
+    app.get("/dump/:tableName", getDataAsCSV);
+    app.post("/predict", upload.single("audio"), postPredict);
+
+    return app
+}
+
+export { getApp };

@@ -1,7 +1,6 @@
 const db = require("../util/database");
 const request = require("supertest");
-const { MongoClient } = require("mongodb");
-const { app } = require("../app");
+const { getApp } = require("../app");
 
 const mockFind = {
     toArray: jest.fn(),
@@ -17,9 +16,11 @@ const mockDb = {
     collection: jest.fn(() => mockCollection),
 };
 
-const mockConnection = {
+const mockClient = {
     db: jest.fn(() => mockDb),
 };
+
+const app = getApp({ mockClient })
 
 jest.mock("mongodb");
 
@@ -44,14 +45,12 @@ describe("GET /table inference", () => {
     };
 
     beforeEach(async () => {
-        jest.spyOn(MongoClient, "connect").mockResolvedValue(mockConnection);
-
-        mockFind.toArray.mockImplementation(() => [inference1, inference2]);
-
-        db.collections = {
+        jest.spyOn(db, 'getCollections').mockImplementation(() => ({
             audio: mockCollection,
             inference: mockCollection,
-        };
+        }))
+
+        mockFind.toArray.mockImplementation(() => [inference1, inference2]);
     });
 
     it("renders inference table header", async () => {
@@ -110,14 +109,12 @@ describe("GET /table audio", () => {
     };
 
     beforeEach(async () => {
-        jest.spyOn(MongoClient, "connect").mockResolvedValue(mockConnection);
-
-        mockFind.toArray.mockImplementation(() => [audio1, audio2]);
-
-        db.collections = {
+        jest.spyOn(db, 'getCollections').mockImplementation(() => ({
             audio: mockCollection,
             inference: mockCollection,
-        };
+        }))
+
+        mockFind.toArray.mockImplementation(() => [audio1, audio2]);
     });
 
     it("renders inference table header", async () => {

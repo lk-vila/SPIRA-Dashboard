@@ -1,32 +1,16 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 
-const collections: any = {};
+const DB_NAME = "spira";
+const COLL_INFERENCE = "inference";
+const COLL_AUDIO = "audio";
 
-const MONGODB_URI = "mongodb://root:12345@localhost:27017/";
-const DBNAME = "test";
-const COLLECTION_NAME_INFERENCE = "inference";
-const COLLECTION_NAME_AUDIO = "audio";
+const getCollections = (mongoClient: MongoClient) => {
+    const db = mongoClient.db(DB_NAME)
 
-const mongoConnect = async (callback: () => void) => {
-    try {
-        const connection = await MongoClient.connect(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            wtimeoutMS: 1000,
-        });
-
-        const db = connection.db(DBNAME);
-
-        const inferenceCollection = db.collection(COLLECTION_NAME_INFERENCE);
-        const audioCollection = db.collection(COLLECTION_NAME_AUDIO);
-
-        collections.inference = inferenceCollection;
-        collections.audio = audioCollection;
-
-        callback();
-    } catch (e) {
-        console.error(e);
+    return {
+        inference: db.collection(COLL_INFERENCE),
+        audio: db.collection(COLL_AUDIO)
     }
-};
+}
 
-export { mongoConnect, collections };
+export { getCollections }
