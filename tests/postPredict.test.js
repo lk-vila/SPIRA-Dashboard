@@ -86,7 +86,7 @@ describe("POST /predict", () => {
             age: "25",
             level: "2",
             audio_hash: '92aff6ffe140da201a4a94cb3c3b9e1ff0b2a25a',
-            result: "0.734",
+            result: "0.999",
         });
     });
 
