@@ -3,16 +3,19 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "fs";
 import { Parser } from "json2csv";
-import { collections } from "../util/database";
+import { getCollections } from '../util/database'
 const shasum = require("shasum");
 
 const getHome = (_req: Request, res: Response, _next: NextFunction) => {
     res.render("home/homePage");
 };
 
-const getTable = async (_req: Request, res: Response, _next: NextFunction) => {
+const getTable = async (req: Request, res: Response, _next: NextFunction) => {
+    // @ts-expect-error
+    const collections = getCollections(req.app.mongoClient)
     const inferenceList = await collections.inference.find().toArray();
     const audioList = await collections.audio.find().toArray();
+
     const inference_table_columns = [
         "Data",
         "Descrição",
@@ -37,19 +40,16 @@ const getTable = async (_req: Request, res: Response, _next: NextFunction) => {
     });
 };
 
-const test = async (_req: Request, res: Response, _next: NextFunction) => {
-    const data = await collections.inference.find().toArray();
-
-    res.send(data);
-};
-
 const getDataAsCSV = async (
     req: Request,
     res: Response,
     _next: NextFunction
 ) => {
     let data;
-    const tableName = req.params.tableName;
+    
+    // @ts-expect-error
+    const collections = getCollections(req.app.mongoClient)
+    const tableName = req.params.tableName;    
     const json2csvParser = new Parser({ header: true });
 
     if (tableName === "inference") {
@@ -61,7 +61,7 @@ const getDataAsCSV = async (
         data = await collections.audio.find({}).project({ _id: 0 }).toArray();
     }
 
-    const csvData = json2csvParser.parse(data);
+    const csvData = json2csvParser.parse(data as Document[]);
     const timestamp = Date.now();
 
     fs.writeFileSync(`resources/csv-${timestamp}.csv`, csvData);
@@ -78,6 +78,8 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
         req.body.nivel_falta_de_ar
     ) {
         try {
+            // @ts-expect-error
+            const collections = getCollections(req.app.mongoClient)
             const timestamp = new Date().toISOString()
             const formData = new FormData()
 
@@ -95,8 +97,8 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
             formData.append("idade", age)
             formData.append("nivel_falta_de_ar", level)
 
-            // const spiraApiResponse = await axios.post("https://spira-api-demo.herokuapp.com/predict", formData, {
-            const spiraApiResponse = await axios.post("http://127.0.0.1:5000/predict", formData, {
+            const spiraApiResponse = await axios.post("https://spira-api-demo.herokuapp.com/predict", formData, {
+            // const spiraApiResponse = await axios.post("http://127.0.0.1:5000/predict", formData, {
                 headers: formData.getHeaders()
             })
 
@@ -151,4 +153,4 @@ const unlinkFile = (fileName: string) => {
     });
 };
 
-export { getHome, getTable, getDataAsCSV, postPredict, test };
+export { getHome, getTable, getDataAsCSV, postPredict };

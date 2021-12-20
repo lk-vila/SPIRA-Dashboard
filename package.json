@@ -8,8 +8,8 @@
     "license": "MIT",
     "scripts": {
         "format:fix": "prettier --write .",
-        "dev": "nodemon --exec npx ts-node app.ts",
-        "test": "jest",
+        "dev": "nodemon --exec npx ts-node index.ts",
+        "test": "jest --coverage",
         "test:watch": "jest --watchAll"
     },
     "devDependencies": {

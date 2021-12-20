@@ -1,0 +1,29 @@
+name: CI workflow
+
+on: push
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+        cache: 'yarn'
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      with:
+        mongodb-version: '5.0'
+        mongodb-username: root
+        mongodb-password: '12345'
+        mongodb-db: test
+        
+    - name: Install deps
+      run: yarn
+    
+    - name: Run tests
+      run: yarn test
