@@ -174,5 +174,25 @@ describe("POST /predict", () => {
             )
         });
     });
-    
+
+    describe("when isJSON param is sent", () => {
+        beforeEach(async () => {
+            response = await request(app)
+                .post("/predict")
+                .field("sexo", "M")
+                .field("idade", 25)
+                .field("descricao", "essa descricao é um teste x013xn019dww2k@peo1o0c,fp3")
+                .field("nivel_falta_de_ar", 2)
+                .field("isJSON","TrUe")
+                .attach("audio", "tests/fixtures/sample.wav");
+        });
+
+        it("returns status code 200", () => {
+            expect(response.statusCode).toEqual(200);
+        });
+
+        it("serializes result", () => {
+            expect(response.body).toEqual({ resultado: 0.999 });
+        });
+    });
 });
