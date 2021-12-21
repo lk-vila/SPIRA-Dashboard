@@ -1,6 +1,6 @@
 files
 node_modules
 out
-.env
+.env*
 *.csv
 *.log

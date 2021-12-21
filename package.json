@@ -8,7 +8,7 @@
     "license": "MIT",
     "scripts": {
         "format:fix": "prettier --write .",
-        "dev": "nodemon --exec npx ts-node index.ts",
+        "dev": "for e in .env*;do export $(cat $e; echo); done; nodemon --exec npx ts-node index.ts",
         "start": "npx ts-node index.ts",
         "test": "jest --coverage",
         "test:watch": "jest --watchAll"

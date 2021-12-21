@@ -1,4 +1,4 @@
-source .env
+source .env*
 
 if [[ -z "${PORT}" ]]; then
 echo "Using default port"
