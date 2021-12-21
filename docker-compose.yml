@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   web:
-    build: .
+    image: spira-dashboard
     restart: always
     ports:
       - "80:${PORT}"
@@ -10,6 +10,7 @@ services:
       PORT: "${PORT}"
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+      SPIRA_API_URL: "${SPIRA_API_URL}"
     depends_on:
       - db
     
@@ -23,5 +24,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
       - /data/spira-dashboard-mongodb:/data/db
-    
-    
