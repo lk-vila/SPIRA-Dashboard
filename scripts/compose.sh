@@ -1,7 +1,8 @@
 source .env
 
-if [[ ! -z "${PORT}" ]]; then
+if [[ -z "${PORT}" ]]; then
+echo "Using default port"
 export PORT=8000
 fi
 
-sudo docker-compose up
+sudo -E docker-compose up

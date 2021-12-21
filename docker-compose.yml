@@ -22,6 +22,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
-      - data/spira-dashboard-mongodb:data/db
+      - /data/spira-dashboard-mongodb:/data/db
     
     
