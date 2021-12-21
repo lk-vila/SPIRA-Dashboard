@@ -97,7 +97,7 @@ const postPredict = async (req: Request, res: Response, next: NextFunction) => {
             formData.append("idade", age)
             formData.append("nivel_falta_de_ar", level)
 
-            const url = process.env.SPIRA_API_URL || "https://spira-api.herokuapp.com/predict"
+            const url = process.env.SPIRA_API_URL || ""
             const spiraApiResponse = await axios.post(url, formData, {
                 headers: formData.getHeaders()
             })
