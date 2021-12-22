@@ -30,27 +30,27 @@ jobs:
 
     - name: Get Coverage for Badge
       run: |
-      sudo apt install -y jq
+        sudo apt install -y jq
 
-      echo "COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')" >> $GITHUB_ENV
+        echo "COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')" >> $GITHUB_ENV
 
-      # var REF = 'refs/pull/27/merge.json';
-      REF=${{ github.ref }}
+        # var REF = 'refs/pull/27/merge.json';
+        REF=${{ github.ref }}
 
-      # console.log('github.ref: ' + REF);
-      echo "github.ref: $REF"
+        # console.log('github.ref: ' + REF);
+        echo "github.ref: $REF"
 
-      # var PATHS = REF.split('/');
-      IFS='/' read -ra PATHS <<< "$REF"
+        # var PATHS = REF.split('/');
+        IFS='/' read -ra PATHS <<< "$REF"
 
-      # var BRANCH_NAME = PATHS[1] + PATHS[2];
-      BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
+        # var BRANCH_NAME = PATHS[1] + PATHS[2];
+        BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
 
-      # console.log(BRANCH_NAME); // 'pull_27'
-      echo $BRANCH_NAME
+        # console.log(BRANCH_NAME); // 'pull_27'
+        echo $BRANCH_NAME
 
-      # process.env.BRANCH = 'pull_27';
-      echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+        # process.env.BRANCH = 'pull_27';
+        echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
 
     - name: Create badge
       uses: schneegans/dynamic-badges-action@v1.0.0
