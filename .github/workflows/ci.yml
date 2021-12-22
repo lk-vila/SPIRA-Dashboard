@@ -27,9 +27,9 @@ jobs:
     
     - name: Run tests
       run: yarn test
-    
+
     - name: Get Coverage for Badge
-    run: |
+      run: |
       sudo apt install -y jq
 
       echo "COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')" >> $GITHUB_ENV
@@ -52,13 +52,13 @@ jobs:
       # process.env.BRANCH = 'pull_27';
       echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
 
-  - name: Create badge
-    uses: schneegans/dynamic-badges-action@v1.0.0
-    with:
-      auth: ${{ secrets.GIST_SECRET }}
-      gistID: 1013be5684953ab9aa1dec8d2d663c6d
-      filename: SPIRA-Dashboard__${{ env.BRANCH }}.json
-      label: Coverage
-      message: ${{ env.COVERAGE }}
-      color: green
-      namedLogo: jest
+    - name: Create badge
+      uses: schneegans/dynamic-badges-action@v1.0.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: 1013be5684953ab9aa1dec8d2d663c6d
+        filename: SPIRA-Dashboard__${{ env.BRANCH }}.json
+        label: Coverage
+        message: ${{ env.COVERAGE }}
+        color: green
+        namedLogo: jest
