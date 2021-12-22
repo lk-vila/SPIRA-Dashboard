@@ -24,7 +24,20 @@ jobs:
       run: |
         sudo apt install -y jq
 
-        echo "COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')" >> $GITHUB_ENV
+        COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct' | awk '{print int($1)}')
+        echo "COVERAGE=$COVERAGE%" >> $GITHUB_ENV
+
+        BADGE_COLOR=""
+        if (( $COVERAGE > 75 ));then
+        BADGE_COLOR=success
+        elif (( $COVERAGE > 50 ));then
+        BADGE_COLOR=green
+        elif (( $COVERAGE > 25 ));then
+        BADGE_COLOR=yellow
+        else
+        BADGE_COLOR=orange
+        fi
+        echo "BADGE_COLOR=$BADGE_COLOR" >> $GITHUB_ENV
 
         # var REF = 'refs/pull/27/merge.json';
         REF=${{ github.ref }}
@@ -52,5 +65,5 @@ jobs:
         filename: SPIRA-Dashboard__${{ env.BRANCH }}.json
         label: Coverage
         message: ${{ env.COVERAGE }}
-        color: green
+        color: ${{ env.BADGE_COLOR }}
         namedLogo: jest

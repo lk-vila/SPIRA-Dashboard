@@ -4,6 +4,7 @@ module.exports = {
     testEnvironment: "node",
     clearMocks: true,
     coverageReporters: [
-        "json-summary"
+        "json-summary",
+        "text-summary"
     ]
 };
