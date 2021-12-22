@@ -30,7 +30,7 @@ jobs:
     
     - name: Get Coverage for Badge
     run: |
-      apt install jq
+      sudo apt install -y jq
 
       echo "COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')" >> $GITHUB_ENV
 
