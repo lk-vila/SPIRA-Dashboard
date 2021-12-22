@@ -1,6 +1,6 @@
 <h1 align="center">SPIRA DASHBOARD - LABXP</h1>
 
-![GitHub deployments](https://img.shields.io/github/deployments/lk-vila/SPIRA-Dashboard/spira-dashboard-demo)   [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Flk-vila%2FSPIRA-Dashboard%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/lk-vila/SPIRA-Dashboard/goto?ref=main)   [![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/lk-vila/1013be5684953ab9aa1dec8d2d663c6d/raw/SPIRA-Dashboard__heads_main.json)]
+[![GitHub deployments](https://img.shields.io/github/deployments/lk-vila/SPIRA-Dashboard/spira-dashboard-demo)](https://spira-dashboard-demo.herokuapp.com/)   [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Flk-vila%2FSPIRA-Dashboard%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/lk-vila/SPIRA-Dashboard/goto?ref=main)   ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/lk-vila/1013be5684953ab9aa1dec8d2d663c6d/raw/SPIRA-Dashboard__heads_main.json)
 
 <p align="center">
   <img src="assets/preview.png" alt="Tree">
